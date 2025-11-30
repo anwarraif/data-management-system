@@ -1,11 +1,93 @@
+# # Teknik IQR
+# import pandas as pd
+
+# # Contoh dataset
+# data = {'feature': [10, 12, 11, 14, 13, 120, 13, 12, 11, 10]}
+# df = pd.DataFrame(data)
+# print(df)
+
+# # Menghitung Q1, Q3, dan IQR
+# Q1 = df['feature'].quantile(0.25)
+# Q3 = df['feature'].quantile(0.75)
+# IQR = Q3 - Q1
+
+# # Menentukan batas bawah dan atas
+# lower_bound = Q1 - 1.5 * IQR
+# upper_bound = Q3 + 1.5 * IQR
+
+# # Mengidentifikasi dan menghapus outlier
+# df_outliers_removed = df[(df['feature'] >= lower_bound) & (df['feature'] <= upper_bound)]
+# print(df_outliers_removed)
+
+# # Teknik Z-score
+# import pandas as pd
+# import numpy as np
+
+# data = {'feature': [10, 12, 11, 14, 13, 120, 13, 12, 11, 10]}
+# df = pd.DataFrame(data)
+
+# # Menghitung mean dan standar deviasi
+# mean = df['feature'].mean()
+# std_dev = df['feature'].std()
+
+# # Menghitung Z-score
+# df['z_score'] = (df['feature'] - mean) / std_dev
+
+# # Menghapus data dengan Z-score > 3 atau < -3
+# df_no_outliers = df[(df['z_score'] < 3) & (df['z_score'] > -3)]
+# print(df_no_outliers)
+
+## Feature Engineering
+# Contoh data tanggal
+import pandas as pd
+import numpy as np
+
+# df = pd.DataFrame({'date': ['2021-01-01', '2021-06-15', '2021-12-31']})
+# df['date'] = pd.to_datetime(['2021-01-01', '2021-06-15', '2021-12-31'])
+# df['month'] = df['date'].dt.month
+# df['day_of_week'] = df['date'].dt.dayofweek
+# df['is_weekend'] = df['day_of_week'] >= 5
+# print(df)
+
+# # interaksi antar fitur
+# Membuat fitur baru dengan mengalikan dua fitur
+# df = pd.DataFrame()
+# df['feature1'] = [1, 2, 3, 4, 5]
+# df['feature2'] = [10, 20, 30, 40, 50]
+# df['interaction'] = df['feature1'] * df['feature2']
+# print(df)
+
+# # One-Hot Encoding untuk Data Kategori:
+# df = pd.DataFrame({'category': ['A', 'B', 'C', 'D']})
+# df['category'] = ['A', 'B', 'A', 'C']
+# # print(df)
+# df_encoded = pd.get_dummies(df, columns=['category'])
+# print(df_encoded)
+
+# # Feature Scalling
+# from sklearn.preprocessing import MinMaxScaler
+
+# scaler = MinMaxScaler()
+
+# df[['feature1', 'feature2']] = scaler.fit_transform(df[['feature1', 'feature2']])
+# print(df)
+
+# from sklearn.preprocessing import StandardScaler
+
+# scaler = StandardScaler()
+# df[['feature1', 'feature2']] = scaler.fit_transform(df[['feature1', 'feature2']])
+# print(df)
+
+
+# Use Case: Twitter Sentiment Analysist
 import pandas as pd
 # 1. Read Data
 df = pd.read_csv('data.csv', encoding = "ISO-8859-1",header=None)
 df = df[:1000]
 df.columns = ['target', 'tweet_id', 'datetime', 'query', 'username', 'tweet']
 df.replace({'target':{4:1}}, inplace = True)
-df.head(10)
-print(df)
+# df.head(10)
+# print(df)
 
 
 # Stemming
@@ -45,7 +127,7 @@ df['stemmed_content'] = df['tweet'].apply(stemming)
 print(df)
 
 
-# Ubah kata menjadi vecto
+# Ubah kata menjadi vector
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
 
